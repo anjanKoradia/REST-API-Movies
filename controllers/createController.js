@@ -37,7 +37,7 @@ const createController = {
       let document;
       try {
         document = await Movie.create({
-          movieName: name,
+          name,
           summary,
           image: filePath,
         });

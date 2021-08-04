@@ -12,7 +12,7 @@ const PORT = process.env.PORT || 3000;
 /* ---------------------------------------- 
   Database connection 
 ---------------------------------------- */
-const url = "mongodb://localhost/node_rest_credence_analytics_company";
+const url = "mongodb://localhost/node_rest_api_credence_analytics_company";
 
 mongoose.connect(url, {
   useNewUrlParser: true,
