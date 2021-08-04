@@ -1,11 +1,8 @@
-require("dotenv").config();
-
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const initRoute = require("./routes");
 const path = require("path");
-const errorHandler = require("./middleware/errorHandler");
 
 const PORT = process.env.PORT || 3000;
 
@@ -34,7 +31,6 @@ connection
 global.appRoot = path.resolve(__dirname);
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.use(errorHandler);
 
 // Routes
 initRoute(app);

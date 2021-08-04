@@ -17,7 +17,7 @@ const createController = {
       if (req.file) {
         filePath = req.file.path;
       } else {
-        return next(`ValidationError: "image" is required`);
+        return next(new Error(`ValidationError: "image" is required`));
       }
 
       // validate req body using joi library

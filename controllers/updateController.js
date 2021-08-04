@@ -10,14 +10,17 @@ const updateController = {
         return next(CustomErrorHandler.serverError(err.message));
       }
 
-      const oldImgPath = await Movie.findById(req.params.id);
+      const movie = await Movie.findById(req.params.id);
+      if (!movie) {
+        return next(new Error("Movie with give id is not available."));
+      }
 
       // path of image save in folder
       let filePath;
       if (req.file) {
         filePath = req.file.path;
 
-        fs.unlink(`${oldImgPath.image}`, (err) => {
+        fs.unlink(`${movie.image}`, (err) => {
           if (err) {
             return next(CustomErrorHandler.serverError(err.message));
           }
