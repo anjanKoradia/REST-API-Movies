@@ -1,15 +1,18 @@
+const dotenv = require("dotenv");
+dotenv.config();
+
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-const initRoute = require("./routes");
 const path = require("path");
+const router = require("./routes");
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.APP_PORT || 3000;
 
 /* ---------------------------------------- 
   Database connection 
 ---------------------------------------- */
-const url = "mongodb://localhost/node_rest_api_credence_analytics_company";
+const url = process.env.DB_URL;
 
 mongoose.connect(url, {
   useNewUrlParser: true,
@@ -31,9 +34,10 @@ connection
 global.appRoot = path.resolve(__dirname);
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+app.use("/uploads", express.static("uploads"));
 
 // Routes
-initRoute(app);
+app.use("/api", router);
 
 app.listen(PORT, () => {
   console.log(`Server started on port ${PORT}`);

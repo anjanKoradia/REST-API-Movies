@@ -34,8 +34,8 @@ const updateController = {
           { _id: req.params.id },
           {
             ...(req.body.name && { name }),
-            ...(req.body.summary && { summary }),
             ...(req.file && { image: filePath }),
+            ...(req.body.summary && { summary }),
           },
           { new: true }
         );

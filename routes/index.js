@@ -1,21 +1,22 @@
+const express = require("express");
+const router = express.Router();
+
 const createController = require("../controllers/createController");
 const deleteController = require("../controllers/deleteController");
 const readController = require("../controllers/readController");
 const updateController = require("../controllers/updateController");
 
-function initRoute(app) {
-  // Read movies
-  app.get("/movies", readController.read);
-  app.get("/movies/:id", readController.readOne);
+// Read movies
+router.get("/movies", readController.read);
+router.get("/movies/:id", readController.readOne);
 
-  // Create movie
-  app.post("/movies", createController.addMovie);
+// Create movie
+router.post("/movies", createController.addMovie);
 
-  // Update movie
-  app.put("/movies/:id", updateController.update);
+// Update movie
+router.put("/movies/:id", updateController.update);
 
-  // Delete movie
-  app.delete("/movies/:id", deleteController.delete);
-}
+// Delete movie
+router.delete("/movies/:id", deleteController.delete);
 
-module.exports = initRoute;
+module.exports = router;

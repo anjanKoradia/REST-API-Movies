@@ -1,8 +1,15 @@
 const Movie = require("../models/movie");
+const CustomErrorHandler = require("../services/CustomErrorHandler");
 
 const readController = {
   async read(req, res, next) {
-    const moviesList = await Movie.find();
+    let moviesList;
+
+    try {
+      moviesList = await Movie.find();
+    } catch (error) {
+      return next(CustomErrorHandler.serverError());
+    }
 
     if (!moviesList) {
       return next(new Error("Database is empty."));
@@ -12,7 +19,13 @@ const readController = {
   },
 
   async readOne(req, res, next) {
-    const movie = await Movie.findById(req.params.id);
+    let movie;
+
+    try {
+      movie = await Movie.findById(req.params.id);
+    } catch (error) {
+      return next(CustomErrorHandler.serverError());
+    }
 
     if (!movie) {
       return next(new Error("Movie with give id is not available."));

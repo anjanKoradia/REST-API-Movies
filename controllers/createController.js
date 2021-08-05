@@ -12,10 +12,10 @@ const createController = {
       }
 
       // path of image save in folder
-      let filePath;
+      let fileName;
 
       if (req.file) {
-        filePath = req.file.path;
+        fileName = req.file.filename;
       } else {
         return next(new Error(`ValidationError: "image" is required`));
       }
@@ -24,12 +24,15 @@ const createController = {
       const { error } = movieSchema.validate(req.body);
 
       // if error in validate
-      if (error && filePath) {
-        fs.unlink(`${appRoot}/${filePath}`, (err) => {
-          if (err) {
-            return next(CustomErrorHandler.serverError(err.message));
-          }
-        });
+      if (error) {
+        if (fileName) {
+          fs.unlink(`${appRoot}/uploads/${fileName}`, (err) => {
+            if (err) {
+              return next(CustomErrorHandler.serverError(err.message));
+            }
+          });
+        }
+
         return next(error);
       }
 
@@ -38,8 +41,8 @@ const createController = {
       try {
         document = await Movie.create({
           name,
+          image: `uploads/${fileName}`,
           summary,
-          image: filePath,
         });
       } catch (err) {
         return next(err);
