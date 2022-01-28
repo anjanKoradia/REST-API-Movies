@@ -1,6 +1,6 @@
 # REST API Server
 
-REST API assignment using node js for credence analytics company.
+REST API using node js.
 
 ### Create data
 
